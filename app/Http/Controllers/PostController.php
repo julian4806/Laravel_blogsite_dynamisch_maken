@@ -21,11 +21,30 @@ class PostController extends Controller
     public static function search(Request $request)
     {
 
-        $searchQuery = $request->search;
+        // IN DE REQUEST VARIABLE ZITTEN ALLE FORM VALUES
+        $inputValue = $request->value; //kaas
+        $dropdownValue = $request->category; //title, author, body
 
-        $blogsNew = Listing::where('title', 'LIKE', '%' . $searchQuery . '%')->get();
+        if ($inputValue == '' || $dropdownValue == '') {
+            return redirect()->route('blogs');
+        }
 
 
+        if ($dropdownValue == "everything") {
+            $names = ['introduction', 'title', 'author'];
+        } else if ($dropdownValue == "title") {
+            $names = ['title', 'body_title'];
+        } else if ($dropdownValue == "author") {
+            $names = ['author', 'author_status'];
+        } else if ($dropdownValue == "body") {
+            $names = ['introduction', 'body', 'conclusion'];
+        }
+
+        $query = Listing::where($names[0], 'LIKE', '%' . $inputValue . '%');
+        for ($i = 1; $i < (count($names) - 1); $i++) {
+            $query->orWhere($names[$i], 'LIKE', '%' . $inputValue . '%');
+        }
+        $blogsNew = $query->get();
 
         return view('listings', [
             'listings' => $blogsNew
@@ -36,23 +55,35 @@ class PostController extends Controller
     {
         $newListing = new Listing();
 
-        $newListing->title = request('title');
-        $newListing->introduction = request('introduction');
+        $newListing->title = $request->title;
+        $newListing->introduction = $request->introduction;
 
-        $newListing->author = request('author');
-        $newListing->author_status = request('author_status');
-        $newListing->tags = request('tags');
+        $newListing->author = $request->author;
+        $newListing->author_status = $request->author_status;
+        $newListing->tags = $request->tags;
 
-        $newListing->body_title = request('body_title');
-        $newListing->body = request('body');
+        $newListing->body_title = $request->body_title;
+        $newListing->body = $request->body;
 
-        $newListing->conclusion_title = request('conclusion_title');
-        $newListing->conclusion = request('conclusion');
+        $newListing->conclusion_title = $request->conclusion_title;
+        $newListing->conclusion = $request->conclusion;
 
-        $newListing->image = request('image');
+        $newListing->image = $request->image;
 
         $newListing->save();
 
         return redirect()->back()->withErrors(['msg' => 'The Message']);
+    }
+
+    public function viewCreate()
+    {
+        return view('create');
+    }
+
+    public function viewblog(Listing $listing)
+    {
+        return view('listing', [
+            'listing' => $listing
+        ]);
     }
 }
