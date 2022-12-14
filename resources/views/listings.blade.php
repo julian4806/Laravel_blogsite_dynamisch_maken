@@ -59,9 +59,9 @@
 
             <!-- Search -->
             <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl px-3 py-2">
-                <form method="GET" action="#">
+                <form method="GET" action="{{ route('search2') }}">
                     <input type="text" name="search" placeholder="Find something"
-                        class="bg-transparent placeholder-black font-semibold text-sm">
+                        class="bg-transparent font-semibold text-sm">
                 </form>
             </div>
         </div>
@@ -71,7 +71,7 @@
         <article
             class="transition-colors duration-300 hover:bg-gray-100 border border-black border-opacity-0 hover:border-opacity-5 rounded-xl">
             @foreach ($listings as $listing)
-                @if ($loop->first)
+                @if ($loop->index == 0)
                     <div class="py-6 px-5 lg:flex">
                         <div class="flex-1 lg:mr-8">
                             <img src="{{ asset('/assets/img/illustration-1.png') }}" alt="Blog Post illustration"
@@ -126,7 +126,7 @@
 
         <div class="lg:grid lg:grid-cols-2">
             @foreach ($listings as $listing)
-                @if ($listing->id > 1 && $listing->id < 4)
+                @if ($loop->index == 1 || $loop->index == 2) 
                     <article
                         class="transition-colors duration-300 hover:bg-gray-100 border border-black border-opacity-0 hover:border-opacity-5 rounded-xl">
                         <div class="py-6 px-5">
@@ -184,7 +184,7 @@
 
         <div class="lg:grid lg:grid-cols-3">
             @foreach ($listings as $listing)
-                @if ($listing->id > 3)
+                @if ($loop->index >= 3)
                     <article
                         class="transition-colors duration-300 hover:bg-gray-100 border border-black border-opacity-0 hover:border-opacity-5 rounded-xl">
                         <div class="py-6 px-5">

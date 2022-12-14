@@ -1,15 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Models\Listing;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
-// Get all the listings
-Route::get('/', function () {
-    return view('listings', [
-        'heading' => 'Latest Listings',
-        'listings' => Listing::all()
-    ]);
-});
+// // Get all the listings
+
+Route::get('/', [PostController::class, 'index'])->name('blogs');
+
+Route::get('/search', [PostController::class, 'search'])->name('search2');
 
 
 Route::get('/listings/{listing}', function (Listing $listing) {
@@ -41,5 +40,6 @@ Route::post('/create', function () {
     $newListing->image = request('image');
 
     $newListing->save();
-    return "Gelukt";
+    return redirect()->back()->withErrors(['msg' => 'The Message']);
+
 });
