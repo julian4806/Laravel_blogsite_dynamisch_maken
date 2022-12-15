@@ -31,9 +31,9 @@ class PostController extends Controller
 
 
         if ($dropdownValue == "everything") {
-            $names = ['introduction', 'title', 'author'];
+            $names = ['introduction', 'title', 'author', 'author_status', 'body_title', 'body', 'conclusion_title', 'conclusion'];
         } else if ($dropdownValue == "title") {
-            $names = ['title', 'body_title'];
+            $names = ['title', 'body_title', 'conclusion_title'];
         } else if ($dropdownValue == "author") {
             $names = ['author', 'author_status'];
         } else if ($dropdownValue == "body") {
