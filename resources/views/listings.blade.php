@@ -66,7 +66,7 @@
                 <form method="GET" action="{{ route('search') }}" class="flex">
                     <input type="text" name="value" placeholder="Find something"
                         class="bg-transparent font-semibold text-sm focus:outline-none" value="@if (strlen(request()->get('value')) > 0) {{ request()->get('value') }} @endif"  />
-                    <select id="category" name="category" class="rounded-xl text-sm focus:outline-none bg-transparent">
+                    <select id="category" name="category" class="rounded-xl text-sm focus:outline-none bg-transparent cursor-pointer">
                         <option value="everything" @if ( request()->get('category') == 'everything' || request()->get('category') == '' ) selected @endif>Everything</option>
                         <option value="title" @if ( request()->get('category') == 'title') selected @endif>Title</option>
                         <option value="author" @if ( request()->get('category') == 'author') selected @endif>Author</option>
