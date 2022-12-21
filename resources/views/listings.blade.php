@@ -249,6 +249,7 @@
                 @endif
             @endforeach
         </div>
+    {{ $listings->links() }}
     </main>
 </x-layout>
 {{-- <a href="/create">add a listing here!</a> --}}

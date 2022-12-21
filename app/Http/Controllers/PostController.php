@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Listing;
+use App\Models\Comments;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -10,8 +11,8 @@ class PostController extends Controller
 
     public static function index()
     {
-
-        $blogs = Listing::all();
+        $blogs = Listing::paginate(3);
+        // $blogs = Listing::all();
 
         return view('listings', [
             'listings' => $blogs
@@ -82,8 +83,13 @@ class PostController extends Controller
 
     public function viewblog(Listing $listing)
     {
+        $post_id = $listing->id;
+
+        $comments = Comments::where('comment_post_id', '=', $post_id)->get();
+
         return view('listing', [
-            'listing' => $listing
+            'listing' => $listing,
+            'comments' => $comments
         ]);
     }
 }
