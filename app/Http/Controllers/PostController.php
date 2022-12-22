@@ -11,7 +11,7 @@ class PostController extends Controller
     public static function index()
     {
 
-        $blogs = Listing::all();
+        $blogs = Listing::paginate(6);
 
         return view('listings', [
             'listings' => $blogs

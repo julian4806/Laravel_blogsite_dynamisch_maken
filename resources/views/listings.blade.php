@@ -65,13 +65,15 @@
             <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl px-3 py-2">
                 <form method="GET" action="{{ route('search') }}" class="flex">
                     <input type="text" name="value" placeholder="Find something"
-                        class="bg-transparent font-semibold text-sm focus:outline-none" value="@if (strlen(request()->get('value')) > 0) {{ request()->get('value') }} @endif"  />
-                    <select id="category" name="category" class="rounded-xl text-sm focus:outline-none bg-transparent cursor-pointer">
-                        <option value="everything" @if ( request()->get('category') == 'everything' || request()->get('category') == '' ) selected @endif>Everything</option>
-                        <option value="title" @if ( request()->get('category') == 'title') selected @endif>Title</option>
-                        <option value="author" @if ( request()->get('category') == 'author') selected @endif>Author</option>
-                        <option value="body" @if ( request()->get('category') == 'body') selected @endif>Body</option>
-                      </select>
+                        class="bg-transparent font-semibold text-sm focus:outline-none"
+                        value="@if (strlen(request()->get('value')) > 0) {{ request()->get('value') }} @endif" />
+                    <select id="category" name="category"
+                        class="rounded-xl text-sm focus:outline-none bg-transparent cursor-pointer">
+                        <option value="everything" @if (request()->get('category') == 'everything' || request()->get('category') == '') selected @endif>Everything</option>
+                        <option value="title" @if (request()->get('category') == 'title') selected @endif>Title</option>
+                        <option value="author" @if (request()->get('category') == 'author') selected @endif>Author</option>
+                        <option value="body" @if (request()->get('category') == 'body') selected @endif>Body</option>
+                    </select>
                 </form>
                 {{-- <span class="text-red-700 text-xs">The value is required for searching</span> --}}
             </div>
@@ -139,7 +141,7 @@
 
         <div class="lg:grid lg:grid-cols-2">
             @foreach ($listings as $listing)
-                @if ($loop->index == 1 || $loop->index == 2) 
+                @if ($loop->index == 1 || $loop->index == 2)
                     <article
                         class="transition-colors duration-300 hover:bg-gray-100 border border-black border-opacity-0 hover:border-opacity-5 rounded-xl">
                         <div class="py-6 px-5">
@@ -249,6 +251,7 @@
                 @endif
             @endforeach
         </div>
+        {{ $listings->links() }}
     </main>
 </x-layout>
 {{-- <a href="/create">add a listing here!</a> --}}
